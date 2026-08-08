@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reserva de visitas y catas — Demostración</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --wine:#6b1f2a; --wine-dark:#511620; --gold:#b08d57;
+    --cream:#faf6ef; --paper:#fffdf9; --ink:#2c2420;
+    --muted:#7d7269; --line:#e7ddcf; --ok:#3b6e4a; --ok-bg:#eef5ee;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Karla',sans-serif; color:var(--ink);
+    background:radial-gradient(circle at 50% 0%,#f3ead9 0%,var(--cream) 60%);
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:24px; line-height:1.6;
+  }
+  .card{
+    width:100%; max-width:460px; background:var(--paper);
+    border:1px solid var(--line); border-radius:18px; overflow:hidden;
+    box-shadow:0 18px 50px -20px rgba(81,22,32,.25);
+  }
+  .banner{
+    background:var(--wine); color:#f3ead9; text-align:center;
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase; padding:7px;
+  }
+  .pad{padding:30px 28px}
+  .head{display:flex; align-items:center; gap:10px; margin-bottom:2px}
+  .head svg{width:26px;height:26px;color:var(--wine)}
+  h1{font-family:'Fraunces',serif; font-weight:600; font-size:25px; color:var(--wine-dark)}
+  .sub{font-size:13px; color:var(--muted); margin-bottom:26px}
+  label{display:block; font-size:13px; font-weight:700; color:var(--ink); margin:0 0 9px; letter-spacing:.01em}
+  .row{display:grid; gap:9px; margin-bottom:22px}
+  .row.people{grid-template-columns:repeat(4,1fr)}
+  .row.days{grid-template-columns:repeat(auto-fit,minmax(72px,1fr))}
+  .row.times{grid-template-columns:repeat(4,1fr)}
+  .opt{
+    font-family:'Karla',sans-serif; font-size:14px; padding:11px 6px; cursor:pointer;
+    background:#fff; border:1px solid var(--line); border-radius:11px; color:var(--ink);
+    transition:all .15s ease; text-align:center;
+  }
+  .opt:hover{border-color:var(--gold)}
+  .opt.sel{background:var(--wine); border-color:var(--wine); color:#fff}
+  .cta{
+    width:100%; font-family:'Fraunces',serif; font-size:17px; font-weight:500; color:#fff;
+    background:var(--wine); border:none; border-radius:12px; padding:14px; cursor:pointer;
+    transition:background .15s ease;
+  }
+  .cta:hover{background:var(--wine-dark)}
+  .hint{text-align:center; font-size:12px; color:var(--muted); margin-top:11px}
+  .done{text-align:center; padding:8px 0}
+  .check{width:62px;height:62px;border-radius:50%;background:var(--ok-bg);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+  .check svg{width:34px;height:34px;color:var(--ok)}
+  .done h2{font-family:'Fraunces',serif;font-weight:600;font-size:23px;color:var(--wine-dark);margin-bottom:6px}
+  .done .summary{font-size:14px;color:var(--muted);margin-bottom:20px}
+  .mail{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:15px;text-align:left;margin-bottom:14px}
+  .mail .from{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:7px;display:flex;align-items:center;gap:6px}
+  .mail .from svg{width:14px;height:14px}
+  .mail .body{font-size:13px;color:var(--ink)}
+  .reminder{font-size:12px;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:18px}
+  .reminder svg{width:15px;height:15px;color:var(--gold)}
+  .again{font-family:'Karla',sans-serif;font-size:13px;font-weight:700;background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 18px;cursor:pointer;color:var(--ink)}
+  .again:hover{border-color:var(--gold)}
+  .hide{display:none}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="banner">Demostración · sistema de reservas</div>
+  <div class="pad">
+
+    <div id="form">
+      <div class="head">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3M16 2v3M3 9h18M5 4h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>
+        <h1>Reserva tu visita y cata</h1>
+      </div>
+      <p class="sub">Bodega Ejemplo · Ribera de Navarra</p>
+
+      <label>Personas</label>
+      <div class="row people" id="people">
+        <div class="opt" data-v="2">2</div>
+        <div class="opt" data-v="4">4</div>
+        <div class="opt" data-v="6">6</div>
+        <div class="opt" data-v="8+">8+</div>
+      </div>
+
+      <label>Día</label>
+      <div class="row days" id="days"></div>
+
+      <label>Hora</label>
+      <div class="row times" id="times">
+        <div class="opt" data-v="11:00">11:00</div>
+        <div class="opt" data-v="12:30">12:30</div>
+        <div class="opt" data-v="17:00">17:00</div>
+        <div class="opt" data-v="18:30">18:30</div>
+      </div>
+
+      <button class="cta" id="confirm">Confirmar reserva</button>
+      <p class="hint" id="hint">Elige personas, día y hora</p>
+    </div>
+
+    <div id="done" class="done hide">
+      <div class="check">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      </div>
+      <h2>¡Reserva confirmada!</h2>
+      <p class="summary" id="summary"></p>
+      <div class="mail">
+        <div class="from">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          Email automático enviado al cliente
+        </div>
+        <div class="body" id="mailbody"></div>
+      </div>
+      <div class="reminder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        Se enviará un recordatorio automático el día antes
+      </div>
+      <button class="again" id="again">Probar otra vez</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  var sel={people:null,day:null,time:null};
+  var days=["sáb 31 may","dom 1 jun","mié 4 jun","jue 5 jun","vie 6 jun"];
+  var dw=document.getElementById('days');
+  days.forEach(function(d){
+    var e=document.createElement('div');
+    e.className='opt'; e.dataset.v=d; e.textContent=d;
+    dw.appendChild(e);
+  });
+  function group(id,key){
+    document.getElementById(id).addEventListener('click',function(ev){
+      var t=ev.target.closest('.opt'); if(!t) return;
+      this.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel');});
+      t.classList.add('sel'); sel[key]=t.dataset.v;
+      document.getElementById('hint').textContent =
+        (sel.people&&sel.day&&sel.time)?'Listo para confirmar':'Elige personas, día y hora';
+    });
+  }
+  group('people','people'); group('days','day'); group('times','time');
+  document.getElementById('confirm').addEventListener('click',function(){
+    if(!(sel.people&&sel.day&&sel.time)){
+      document.getElementById('hint').textContent='Falta elegir personas, día u hora'; return;
+    }
+    document.getElementById('summary').textContent=sel.people+' personas · '+sel.day+' · '+sel.time;
+    document.getElementById('mailbody').innerHTML=
+      'Hola, tu visita a Bodega Ejemplo está confirmada para el <b>'+sel.day+' a las '+sel.time+'</b> ('+sel.people+' personas). ¡Te esperamos! Para cualquier cambio, responde a este correo.';
+    document.getElementById('form').classList.add('hide');
+    document.getElementById('done').classList.remove('hide');
+  });
+  document.getElementById('again').addEventListener('click',function(){
+    sel={people:null,day:null,time:null};
+    document.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel');});
+    document.getElementById('hint').textContent='Elige personas, día y hora';
+    document.getElementById('done').classList.add('hide');
+    document.getElementById('form').classList.remove('hide');
+  });
+})();
+</script>
+</body>
+</html>
