@@ -1,2 +1,2 @@
 # portfolio
-Landing para mostrar mi portafolio digital de servicios de software y automatización.
+Web personal de Eduardo Aldaz, fundador de Servis Digital: proyectos, trayectoria y testimonios. Se publica en https://eduardoaldaz.servisdigital.com (GitHub Pages).
