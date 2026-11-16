@@ -1,2 +1,2 @@
 # portfolio
-Web personal de Eduardo Aldaz, fundador de Servis Digital: proyectos, trayectoria y testimonios. Se publica en https://eduardoaldaz.servisdigital.com (GitHub Pages).
+Web personal de Eduardo Aldaz, fundador de Servis Digital: proyectos, trayectoria y testimonios. Se publica en https://eduardoaldaz.servisdigital.com (GitHub Pages, dominio en el archivo CNAME).
