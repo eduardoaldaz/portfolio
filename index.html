@@ -63,6 +63,10 @@ p{margin:0}
 }
 .nav-in{display:flex;align-items:center;gap:28px;height:64px;max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
 .mark{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:800;font-size:16px;letter-spacing:-.02em;margin-right:auto}
+.menu-btn{display:none;order:3;align-items:center;justify-content:center;width:42px;height:42px;margin-right:-8px;border:0;background:none;color:var(--ink);cursor:pointer;border-radius:999px}
+.menu-btn svg path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.menu-btn .i-close,.nav.open .menu-btn .i-open{display:none}
+.nav.open .menu-btn .i-close{display:inline}
 .mark span.dot{width:9px;height:9px;border-radius:50%;background:var(--signal);flex:none}
 .mark .role{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-45);padding-left:12px;margin-left:2px;border-left:1px solid var(--line)}
 @media (max-width:900px){.mark .role{display:none}}
@@ -324,7 +328,13 @@ a.sd:hover{color:var(--signal)}
 }
 @media (max-width:660px){
   body{font-size:16.5px}
-  .nav-links{display:none}
+  .nav-in{gap:12px}
+  .nav .btn-sm{padding:8px 13px;font-size:13.5px}
+  .menu-btn{display:inline-flex}
+  .nav-links{display:none;position:absolute;left:0;right:0;top:64px;flex-direction:column;gap:0;background:var(--bone);border-bottom:1px solid var(--line);padding:6px var(--pad) 14px}
+  .nav.open .nav-links{display:flex}
+  .nav-links a{padding:14px 0;font-size:17px;color:var(--ink);border-bottom:1px solid var(--line)}
+  .nav-links a:last-child{border-bottom:0}
   .flow{grid-template-columns:1fr}
   .serv,.steps,.stack-grid,.cards{grid-template-columns:1fr}
   .card,.card.feat,.card.small{grid-column:span 1}
@@ -346,7 +356,10 @@ a.sd:hover{color:var(--signal)}
 <nav class="nav">
   <div class="nav-in">
     <a class="mark" href="#top"><span class="dot"></span>Eduardo Aldaz<span class="role">Ingeniero de IA y automatización</span></a>
-    <div class="nav-links">
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menú">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path class="i-open" d="M4 7h16M4 12h16M4 17h16"/><path class="i-close" d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+    <div class="nav-links" id="nav-links">
       <a href="#proyectos">Proyectos</a>
       <a href="#trayectoria">Trayectoria</a>
       <a href="#sobre-mi">Sobre mí</a>
@@ -750,6 +763,14 @@ a.sd:hover{color:var(--signal)}
 </footer>
 
 <script>
+// Menú móvil
+(() => {
+  const nav = document.querySelector('.nav'), btn = nav.querySelector('.menu-btn');
+  const set = (o) => { nav.classList.toggle('open', o); btn.setAttribute('aria-expanded', o); btn.setAttribute('aria-label', o ? 'Cerrar menú' : 'Abrir menú'); };
+  btn.addEventListener('click', () => set(!nav.classList.contains('open')));
+  nav.querySelectorAll('.nav-links a').forEach((a) => a.addEventListener('click', () => set(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') set(false); });
+})();
 // Filtro de proyectos
 const btns = document.querySelectorAll('.filters button');
 const cards = document.querySelectorAll('.cards .card');
