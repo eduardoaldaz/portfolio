@@ -67,9 +67,10 @@ p{margin:0}
 .menu-btn svg path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 .menu-btn .i-close,.nav.open .menu-btn .i-open{display:none}
 .nav.open .menu-btn .i-close{display:inline}
+.nav-links a.only-menu{display:none}
 .mark span.dot{width:9px;height:9px;border-radius:50%;background:var(--signal);flex:none}
-.mark .role{font-family:var(--mono);font-weight:500;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-45);padding-left:12px;margin-left:2px;border-left:1px solid var(--line)}
-@media (max-width:900px){.mark .role{display:none}}
+.mark .who{display:flex;flex-direction:column;line-height:1.15}
+.mark .role{font-family:var(--body);font-weight:500;font-size:12.5px;letter-spacing:0;color:var(--ink-70);margin-top:2px}
 .nav-links{display:flex;gap:26px}
 .nav-links a{font-size:14.5px;text-decoration:none;color:var(--ink-70);padding-block:4px}
 .nav-links a:hover{color:var(--ink);box-shadow:inset 0 -1.5px 0 var(--signal)}
@@ -329,7 +330,8 @@ a.sd:hover{color:var(--signal)}
 @media (max-width:660px){
   body{font-size:16.5px}
   .nav-in{gap:12px}
-  .nav .btn-sm{padding:8px 13px;font-size:13.5px}
+  .nav > .nav-in > .btn{display:none}
+  .nav-links a.only-menu{display:block}
   .menu-btn{display:inline-flex}
   .nav-links{display:none;position:absolute;left:0;right:0;top:64px;flex-direction:column;gap:0;background:var(--bone);border-bottom:1px solid var(--line);padding:6px var(--pad) 14px}
   .nav.open .nav-links{display:flex}
@@ -355,7 +357,7 @@ a.sd:hover{color:var(--signal)}
 
 <nav class="nav">
   <div class="nav-in">
-    <a class="mark" href="#top"><span class="dot"></span>Eduardo Aldaz<span class="role">Ingeniero de IA y automatización</span></a>
+    <a class="mark" href="#top"><span class="dot"></span><span class="who">Eduardo Aldaz<span class="role">Ingeniero de IA y automatización</span></span></a>
     <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menú">
       <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path class="i-open" d="M4 7h16M4 12h16M4 17h16"/><path class="i-close" d="M6 6l12 12M18 6 6 18"/></svg>
     </button>
@@ -363,6 +365,7 @@ a.sd:hover{color:var(--signal)}
       <a href="#proyectos">Proyectos</a>
       <a href="#trayectoria">Trayectoria</a>
       <a href="#sobre-mi">Sobre mí</a>
+      <a class="only-menu" href="https://servisdigital.com" target="_blank" rel="noopener">Servis Digital ↗</a>
     </div>
     <a class="btn btn-primary btn-sm" href="https://servisdigital.com" target="_blank" rel="noopener">Servis Digital ↗</a>
   </div>
