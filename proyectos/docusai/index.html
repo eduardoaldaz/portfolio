@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DocusAI — caso de estudio · Eduardo Aldaz</title>
+<meta name="description" content="DocusAI: captura de facturas de proveedor con IA para gestorías y empresas en España. Lee, valida con la fiscalidad española, deja revisar solo lo dudoso y exporta al ERP. En desarrollo.">
+<link rel="canonical" href="https://eduardoaldaz.servisdigital.com/proyectos/docusai/">
+<meta property="og:title" content="DocusAI — caso de estudio · Eduardo Aldaz">
+<meta property="og:description" content="Captura de facturas con IA, sin plantillas por proveedor, con validación fiscal española y conector a Business Central.">
+<meta property="og:url" content="https://eduardoaldaz.servisdigital.com/proyectos/docusai/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://eduardoaldaz.servisdigital.com/img/og-portfolio.png">
+<meta name="theme-color" content="#101B18">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../favicon.ico" sizes="32x32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../caso.css">
+</head>
+<body>
+<nav class="nav"><div class="nav-in">
+  <a class="mark" href="../../"><span class="dot"></span>Eduardo Aldaz</a>
+  <a class="back" href="../../#proyectos">← Proyectos</a>
+  <a class="btn btn-primary btn-sm" href="https://docusai.servisdigital.com" target="_blank" rel="noopener">Ver DocusAI ↗</a>
+</div></nav>
+
+<main>
+<header class="head wrap">
+  <p class="eyebrow">Caso de estudio · Producto propio · España</p>
+  <h1>DocusAI: facturas de proveedor que <em>se registran solas.</em></h1>
+  <p class="lead">Recibe facturas en PDF, foto o correo, extrae los datos con IA, los valida con la fiscalidad española y los envía al programa contable o a Business Central. La persona solo revisa lo que la máquina marca como dudoso.</p>
+  <dl class="facts">
+    <div><dt>Mi papel</dt><dd>Producto, arquitectura y desarrollo</dd></div>
+    <div><dt>Estado</dt><dd><span class="status dev"><i></i>En desarrollo</span></dd></div>
+    <div><dt>Stack</dt><dd>TypeScript · NestJS · Next.js · Claude</dd></div>
+    <div><dt>Web</dt><dd><a href="https://docusai.servisdigital.com" target="_blank" rel="noopener">docusai.servisdigital.com ↗</a></dd></div>
+  </dl>
+</header>
+
+<section class="sec wrap"><div class="sec-grid">
+  <h2>El problema</h2>
+  <div class="body">
+    <p>Una gestoría recibe cada mes facturas de proveedor de muchos clientes, y alguien las teclea una a una en el programa contable: NIF, número, fechas, bases, IVA, retenciones. Es lento y es donde se cuelan los errores.</p>
+    <p>Las herramientas clásicas de captura funcionan con <strong>OCR y una plantilla por proveedor</strong>: caras, lentas de poner en marcha y frágiles cuando el proveedor cambia el diseño de su factura.</p>
+  </div>
+</div></section>
+
+<section class="sec wrap"><div class="sec-grid">
+  <h2>El enfoque</h2>
+  <div class="body">
+    <ul class="list">
+      <li><b>IA generativa sin plantillas:</b> el modelo lee la factura tal como viene y devuelve los datos en un esquema fijo, con la evidencia de dónde sacó cada campo.</li>
+      <li><b>Validación fiscal propia, no confianza ciega:</b> dígito de control de NIF, CIF y NIE, cuadre de bases, cuotas e IVA, recargo de equivalencia, IRPF, fechas coherentes y duplicados.</li>
+      <li><b>Revisar solo lo dudoso:</b> PDF a un lado, campos al otro, con los dudosos resaltados. Lo que está limpio se puede aprobar en bloque.</li>
+      <li><b>Aprende del proveedor:</b> la cuenta contable que eliges al aprobar se recuerda para la siguiente factura.</li>
+      <li><b>Sale hacia donde ya trabajas:</b> CSV y Excel con plantillas para A3, Sage, Contasol o Holded, y conector con Business Central que crea la factura de compra en borrador.</li>
+      <li><b>Pensado para gestorías:</b> varias empresas cliente, buzón de correo por empresa, equipo con roles y verificación en dos pasos.</li>
+    </ul>
+  </div>
+</div></section>
+
+<section class="sec wrap"><div class="sec-grid">
+  <h2>Cómo está hecho</h2>
+  <div class="arch" aria-label="Arquitectura de DocusAI">
+    <div class="arch-row" style="--n:4">
+      <div class="box"><p class="k">Entrada</p><p class="t">PDF, foto o correo</p><p class="d">Subida o buzón propio por empresa.</p></div>
+      <div class="box hot"><p class="k">Worker</p><p class="t">Extracción con IA</p><p class="d">Claude con salida estructurada, en una cola BullMQ.</p></div>
+      <div class="box"><p class="k">Reglas</p><p class="t">Validación fiscal</p><p class="d">Validadores propios con tests (cobertura ≥ 99 %).</p></div>
+      <div class="box"><p class="k">Salida</p><p class="t">Contabilidad o ERP</p><p class="d">Excel, CSV o Business Central.</p></div>
+    </div>
+    <p class="arrow">API NestJS · web Next.js · PostgreSQL · almacenamiento S3</p>
+  </div>
+</div></section>
+
+<section class="sec wrap"><div class="sec-grid">
+  <h2>Decisiones que importaron</h2>
+  <div class="dec">
+    <article><h3>Medir antes de vender</h3><p>Antes de pilotos, una herramienta propia compara el resultado de la IA con facturas reales anotadas a mano y da el acierto por campo, el coste y el tiempo por factura. El objetivo marcado: 95 % o más en NIF, número, fecha y total.</p></article>
+    <article><h3>La IA propone, las reglas deciden</h3><p>El modelo nunca tiene la última palabra sobre los números: cada factura pasa por validadores deterministas, y lo que no cuadra va a revisión con el motivo a la vista.</p></article>
+    <article><h3>Datos en la UE y probado de punta a punta</h3><p>Diseñado para el RGPD: datos alojados en la UE y un proveedor de IA que no entrena con los documentos del cliente. Las pruebas de extremo a extremo (subir, revisar, aprobar, exportar) corren en cada cambio contra un Business Central simulado.</p></article>
+  </div>
+</div></section>
+
+<section class="sec wrap"><div class="sec-grid">
+  <h2>Dónde está ahora</h2>
+  <div class="body">
+    <p>El prototipo funciona de principio a fin, y la ingesta por correo y el conector con Business Central cumplen su criterio contra un entorno simulado. Lo siguiente es <strong>medir la IA con facturas reales y arrancar los primeros pilotos con gestorías</strong>. Hasta entonces, no lo presento como un producto en producción.</p>
+  </div>
+</div></section>
+
+<section class="sec wrap"><div class="sec-grid">
+  <h2>Tecnología</h2>
+  <div class="chips"><span class="chip">TypeScript</span><span class="chip">NestJS</span><span class="chip">Next.js 16</span><span class="chip">BullMQ · Redis</span><span class="chip">PostgreSQL · Prisma</span><span class="chip">Claude · salida estructurada</span><span class="chip">Business Central API</span><span class="chip">Facturae · UBL</span><span class="chip">Playwright</span></div>
+</div></section>
+
+<div class="wrap">
+  <section class="cta">
+    <div><h2>¿Tecleas facturas a mano cada mes?</h2><p>Si eres gestoría o empresa y quieres probarlo cuando abra los pilotos, escríbeme.</p></div>
+    <a class="btn btn-primary" href="https://servisdigital.com/contacto" target="_blank" rel="noopener">Hablemos ↗</a>
+  </section>
+  <nav class="next" aria-label="Otros proyectos">
+    <a href="../facservis/"><span>Anterior</span>← FacServis</a>
+    <a href="../agente-whatsapp/"><span>También</span>Agente de WhatsApp con IA →</a>
+  </nav>
+</div>
+</main>
+<footer><div class="wrap">© 2026 Eduardo Aldaz · <a href="../../">Volver al portfolio</a></div></footer>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agente de WhatsApp con IA — caso de estudio · Eduardo Aldaz</title>
+<meta name="description" content="Agente de WhatsApp con IA para una clínica dental: responde horarios, precios y disponibilidad con el tono de la clínica, guarda cada conversación y avisa cuando alguien quiere reservar.">
+<link rel="canonical" href="https://eduardoaldaz.servisdigital.com/proyectos/agente-whatsapp/">
+<meta property="og:title" content="Agente de WhatsApp con IA — caso de estudio · Eduardo Aldaz">
+<meta property="og:description" content="Un agente que atiende a los pacientes de una clínica dental por WhatsApp, con reglas propias que deciden el camino de la conversación.">
+<meta property="og:url" content="https://eduardoaldaz.servisdigital.com/proyectos/agente-whatsapp/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://eduardoaldaz.servisdigital.com/img/og-portfolio.png">
+<meta name="theme-color" content="#101B18">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../favicon.ico" sizes="32x32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../caso.css">
+</head>
+<body>
+<nav class="nav"><div class="nav-in">
+  <a class="mark" href="../../"><span class="dot"></span>Eduardo Aldaz</a>
+  <a class="back" href="../../#proyectos">← Proyectos</a>
+  <a class="btn btn-primary btn-sm" href="https://servisdigital.com/contacto" target="_blank" rel="noopener">Hablemos ↗</a>
+</div></nav>
+
+<main>
+<header class="head wrap">
+  <p class="eyebrow">Caso de estudio · Proyecto para cliente · Salud</p>
+  <h1>Un agente de WhatsApp que <em>atiende mientras la clínica trabaja.</em></h1>
+  <p class="lead">La doctora perdía pacientes porque no llegaba a contestar WhatsApp entre consulta y consulta. Construí un agente que responde las preguntas de siempre con el tono de la clínica, guarda cada conversación y avisa cuando alguien quiere reservar.</p>
+  <dl class="facts">
+    <div><dt>Mi papel</dt><dd>Diseño y desarrollo completo</dd></div>
+    <div><dt>Estado</dt><dd><span class="status"><i></i>En producción</span></dd></div>
+    <div><dt>Stack</dt><dd>WhatsApp Cloud API · n8n · Llama 3.3</dd></div>
+    <div><dt>Cliente</dt><dd>Clínica dental (privado)</dd></div>
+  </dl>
+</header>
+
+<section class="sec wrap"><div class="sec-grid">
+  <h2>El problema</h2>
+  <div class="body">
+    <p>Los pacientes escriben por WhatsApp a cualquier hora para preguntar lo mismo: horarios, precios, si hay hueco. En una clínica pequeña nadie puede contestar mientras atiende, así que los mensajes se quedaban horas sin respuesta y algunos pacientes acababan yendo a otra parte.</p>
+  </div>
+</div></section>
+
+<section class="sec wrap"><div class="sec-grid">
+  <h2>Cómo funciona</h2>
+  <div class="arch" aria-label="Flujo del agente de WhatsApp">
+    <div class="arch-row" style="--n:5">
+      <div class="box"><p class="k">Entrada</p><p class="t">El paciente escribe</p><p class="d">Un mensaje normal de WhatsApp.</p></div>
+      <div class="box hot"><p class="k">Orquestador</p><p class="t">n8n decide</p><p class="d">Reglas propias marcan el camino.</p></div>
+      <div class="box"><p class="k">IA</p><p class="t">Llama 3.3 70B</p><p class="d">Redacta la respuesta con el tono de la clínica.</p></div>
+      <div class="box"><p class="k">Memoria</p><p class="t">Historial</p><p class="d">Cada conversación queda registrada.</p></div>
+      <div class="box"><p class="k">Salida</p><p class="t">Responde en segundos</p><p class="d">A cualquier hora.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec wrap"><div class="sec-grid">
+  <h2>Decisiones que importaron</h2>
+  <div class="dec">
+    <article><h3>Las reglas mandan, el modelo redacta</h3><p>El camino de la conversación lo deciden reglas propias en n8n, no el modelo. Así el agente nunca improvisa sobre precios ni promete citas: la IA solo pone las palabras.</p></article>
+    <article><h3>Avisar a una persona cuando toca</h3><p>Cuando alguien quiere reservar, el agente avisa a la clínica en lugar de intentar cerrarlo solo. La decisión final sigue siendo humana.</p></article>
+    <article><h3>Todo queda registrado</h3><p>Cada conversación se guarda y la clínica puede consultarla. Además de responder, el agente le dice a la clínica qué preguntan sus pacientes.</p></article>
+  </div>
+</div></section>
+
+<section class="sec wrap"><div class="sec-grid">
+  <h2>Antes y después</h2>
+  <div class="body">
+    <ul class="list">
+      <li><b>Antes:</b> mensajes sin responder durante horas y las mismas preguntas todo el día.</li>
+      <li><b>Después:</b> respuesta automática en segundos, a cualquier hora, sin ocupar al personal.</li>
+      <li><b>Extra:</b> un registro consultable de todo lo que preguntan los pacientes.</li>
+    </ul>
+  </div>
+</div></section>
+
+<section class="sec wrap"><div class="sec-grid">
+  <h2>Tecnología</h2>
+  <div class="chips"><span class="chip">Meta WhatsApp Cloud API</span><span class="chip">n8n</span><span class="chip">Railway</span><span class="chip">Groq · Llama 3.3 70B</span><span class="chip">Google Sheets</span><span class="chip">Webhooks</span></div>
+</div></section>
+
+<div class="wrap">
+  <section class="cta">
+    <div><h2>¿Tus clientes escriben más de lo que puedes contestar?</h2><p>Lo monto a través de Servis Digital, con tus horarios, tus precios y tu tono.</p></div>
+    <a class="btn btn-primary" href="https://servisdigital.com/contacto" target="_blank" rel="noopener">Hablemos ↗</a>
+  </section>
+  <nav class="next" aria-label="Otros proyectos">
+    <a href="../facservis/"><span>Anterior</span>← FacServis</a>
+    <a href="../docusai/"><span>Siguiente</span>DocusAI →</a>
+  </nav>
+</div>
+</main>
+<footer><div class="wrap">© 2026 Eduardo Aldaz · <a href="../../">Volver al portfolio</a></div></footer>
+</body>
+</html>

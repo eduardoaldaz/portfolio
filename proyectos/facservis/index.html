@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FacServis — caso de estudio · Eduardo Aldaz</title>
+<meta name="description" content="Cómo construí y modernicé FacServis, una plataforma de facturación electrónica para el SRI de Ecuador con inventario, compras y cobros, en producción con emisores reales.">
+<link rel="canonical" href="https://eduardoaldaz.servisdigital.com/proyectos/facservis/">
+<meta property="og:title" content="FacServis — caso de estudio · Eduardo Aldaz">
+<meta property="og:description" content="Facturación electrónica para el SRI de Ecuador, reescrita de Symfony 2.6 a Laravel 13 sobre la base de datos en producción.">
+<meta property="og:url" content="https://eduardoaldaz.servisdigital.com/proyectos/facservis/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://eduardoaldaz.servisdigital.com/img/facservis/1-panel.jpg">
+<meta name="theme-color" content="#101B18">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../../favicon.ico" sizes="32x32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../caso.css">
+</head>
+<body>
+<nav class="nav"><div class="nav-in">
+  <a class="mark" href="../../"><span class="dot"></span>Eduardo Aldaz</a>
+  <a class="back" href="../../#proyectos">← Proyectos</a>
+  <a class="btn btn-primary btn-sm" href="https://facservis.com" target="_blank" rel="noopener">facservis.com ↗</a>
+</div></nav>
+
+<main>
+<header class="head wrap">
+  <p class="eyebrow">Caso de estudio · SaaS propio · Ecuador</p>
+  <h1>FacServis: facturación electrónica que <em>también lleva el negocio.</em></h1>
+  <p class="lead">Una plataforma para emitir los comprobantes electrónicos del SRI que además controla inventario, compras y cobros. Está en producción con emisores reales que facturan cada día, y la reescribí por completo sobre la misma base de datos sin pedirles que cambiaran nada.</p>
+  <dl class="facts">
+    <div><dt>Mi papel</dt><dd>Producto, desarrollo y operación</dd></div>
+    <div><dt>Estado</dt><dd><span class="status"><i></i>En producción</span></dd></div>
+    <div><dt>Stack</dt><dd>Laravel 13 · Livewire · Java · MariaDB</dd></div>
+    <div><dt>Web</dt><dd><a href="https://facservis.com" target="_blank" rel="noopener">facservis.com ↗</a></dd></div>
+  </dl>
+</header>
+
+<section class="sec wrap"><div class="sec-grid">
+  <h2>El problema</h2>
+  <div class="body">
+    <p>En Ecuador, cada factura, nota de crédito o retención tiene que firmarse digitalmente y autorizarse en el SRI antes de tener validez. Para un negocio pequeño, eso suele significar un programa solo para facturar y, aparte, el inventario, las compras y lo que le deben sus clientes en hojas de cálculo.</p>
+    <p>FacServis ya resolvía la parte fiscal, pero estaba construido sobre <strong>Symfony 2.6 y PHP 5.6</strong>: difícil de mantener, de asegurar y de ampliar. Había que modernizarlo <strong>sin interrumpir a quienes facturan con él todos los días</strong>.</p>
+  </div>
+</div></section>
+
+<section class="sec wrap"><div class="sec-grid">
+  <h2>Qué hace</h2>
+  <div class="body">
+    <ul class="list">
+      <li><b>Los seis comprobantes del SRI:</b> factura, nota de crédito, nota de débito, retención, guía de remisión y liquidación de compra, firmados y enviados a autorizar.</li>
+      <li><b>Si el SRI no responde,</b> el comprobante no se pierde: un proceso programado lo vuelve a consultar cada minuto, con reintentos espaciados, hasta tener respuesta. La cabecera muestra en todo momento si el SRI está disponible.</li>
+      <li><b>Inventario:</b> cada factura y cada compra mueven el stock, con kardex por producto y aviso de productos bajo mínimo.</li>
+      <li><b>Compras sin teclear:</b> se importa el XML de la factura del proveedor, o se leen solas del correo del emisor cada 10 minutos.</li>
+      <li><b>Cuentas por cobrar y por pagar,</b> facturas recurrentes y un resumen mensual de IVA con los casilleros del Formulario 104.</li>
+      <li><b>Multiemisor y multipunto:</b> un usuario puede gestionar varios RUC, y cada caja o sucursal tiene su propia secuencia.</li>
+    </ul>
+  </div>
+</div></section>
+
+<section class="sec wrap">
+  <div class="sec-grid">
+    <h2>Capturas</h2>
+    <div class="body"><p>Pantallas reales de la aplicación en producción. Los nombres y RUC de clientes y proveedores se han sustituido por datos inventados.</p></div>
+  </div>
+  <div class="shots" style="margin-top:24px">
+    <figure class="wide"><img src="../../img/facservis/1-panel.jpg" alt="Panel de FacServis con el estado de los comprobantes, ventas del mes y últimos comprobantes emitidos" width="1457" height="734" loading="lazy"><figcaption>Panel: estado de los comprobantes, ventas y últimos documentos emitidos.</figcaption></figure>
+    <figure><img src="../../img/facservis/3-compras-xml.jpg" alt="Pantalla de compras con importación del XML del proveedor" width="1457" height="734" loading="lazy"><figcaption>Compras: se importan desde el XML del proveedor.</figcaption></figure>
+    <figure><img src="../../img/facservis/2-cuentas-por-cobrar.jpg" alt="Cuentas por cobrar agrupadas por cliente con el saldo de cada factura" width="1457" height="734" loading="lazy"><figcaption>Cuentas por cobrar, agrupadas por cliente.</figcaption></figure>
+    <figure><img src="../../img/facservis/4-productos-inventario.jpg" alt="Listado de productos con stock, movimientos y kardex" width="1457" height="734" loading="lazy"><figcaption>Productos con stock, movimientos y kardex.</figcaption></figure>
+    <figure><img src="../../img/facservis/5-declaracion-iva.jpg" alt="Resumen mensual de IVA con los casilleros del Formulario 104" width="1457" height="734" loading="lazy"><figcaption>Resumen de IVA con los casilleros del Formulario 104.</figcaption></figure>
+  </div>
+</section>
+
+<section class="sec wrap"><div class="sec-grid">
+  <h2>Cómo está hecho</h2>
+  <div class="arch" aria-label="Arquitectura de FacServis">
+    <div class="arch-row" style="--n:3">
+      <div class="box"><p class="k">Interfaz</p><p class="t">Laravel 13 + Livewire 4</p><p class="d">PHP 8.3. Formularios y pantallas reactivas sin una SPA aparte.</p></div>
+      <div class="box hot"><p class="k">Firma</p><p class="t">Servicio Java (XAdES-BES)</p><p class="d">El firmador original, en su propio contenedor, solo accesible por la red interna.</p></div>
+      <div class="box"><p class="k">Datos</p><p class="t">MariaDB</p><p class="d">La misma base de datos que usaba la versión anterior.</p></div>
+    </div>
+    <p class="arrow">↓ tareas programadas ↓</p>
+    <div class="arch-row" style="--n:4">
+      <div class="box"><p class="k">Cada minuto</p><p class="t">Reconsulta al SRI</p></div>
+      <div class="box"><p class="k">Cada 10 min</p><p class="t">Compras desde el correo</p></div>
+      <div class="box"><p class="k">Diario</p><p class="t">Facturas recurrentes</p></div>
+      <div class="box"><p class="k">Avisos</p><p class="t">Caducidad de firma y plan</p></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec wrap"><div class="sec-grid">
+  <h2>Decisiones que importaron</h2>
+  <div class="dec">
+    <article><h3>Reescribir sin migrar datos</h3><p>La aplicación nueva trabaja sobre las tablas que ya existían en producción. Cada cambio de esquema comprueba antes si la columna o la tabla ya está, porque un <code>CREATE TABLE IF NOT EXISTS</code> se salta en silencio cuando la tabla existe y deja la base sin las columnas nuevas. Lo documenté como plan de puesta en producción antes de tocar nada.</p></article>
+    <article><h3>Cifrar las contraseñas de firma sin cortar el servicio</h3><p>Las contraseñas del certificado de firma y del correo de cada emisor estaban en texto plano. Cambiarlas de golpe habría roto la firma de todos los emisores durante el despliegue. Lo hice en dos pasos: primero un código que lee tanto valores cifrados como antiguos, y después un comando de un solo uso que cifra los que quedan.</p></article>
+    <article><h3>Conservar lo que funciona</h3><p>El firmador Java ya estaba probado contra el SRI, así que en lugar de reescribirlo lo aislé en su propio contenedor, al que solo llega la aplicación. Menos riesgo en la parte que no puede fallar.</p></article>
+  </div>
+</div></section>
+
+<section class="sec wrap"><div class="sec-grid">
+  <h2>Tecnología</h2>
+  <div class="chips"><span class="chip">PHP 8.3</span><span class="chip">Laravel 13</span><span class="chip">Livewire 4</span><span class="chip">Java · XAdES-BES</span><span class="chip">MariaDB</span><span class="chip">Docker</span><span class="chip">SRI web services</span><span class="chip">Tareas programadas</span></div>
+</div></section>
+
+<div class="wrap">
+  <section class="cta">
+    <div><h2>¿Tu negocio tiene un proceso así de crítico?</h2><p>Lo hago a través de Servis Digital: entender el proceso, conectarlo con tus sistemas y automatizar lo repetitivo.</p></div>
+    <a class="btn btn-primary" href="https://servisdigital.com/contacto" target="_blank" rel="noopener">Hablemos ↗</a>
+  </section>
+  <nav class="next" aria-label="Otros proyectos">
+    <a href="../agente-whatsapp/"><span>Siguiente</span>Agente de WhatsApp con IA →</a>
+    <a href="../docusai/"><span>También</span>DocusAI →</a>
+  </nav>
+</div>
+</main>
+<footer><div class="wrap">© 2026 Eduardo Aldaz · <a href="../../">Volver al portfolio</a></div></footer>
+</body>
+</html>
